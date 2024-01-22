@@ -89,3 +89,26 @@ combo_t key_combos[] = {
   COMBO(thumbcombos_fun, KC_APP)
 };
 #endif
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LSFT_T(KC_T):
+        case LSFT_T(KC_N):
+            return TAPPING_TERM - 50;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+#include "achordion.h"
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  if (!process_achordion(keycode, record)) { return false; }
+  // Your macros ...
+
+  return true;
+}
+
+void matrix_scan_user(void) {
+  achordion_task();
+}
